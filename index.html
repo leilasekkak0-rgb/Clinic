@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>عيادة طبية افتراضية خاصة | نظام إدارة الطب الشمولي</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --emerald-900: #043927;
+      --emerald-800: #064e3b;
+      --emerald-700: #047857;
+      --emerald-600: #059669;
+      --emerald-100: #d1fae5;
+      --emerald-50:  #ecfdf5;
+      --gold-600:    #b48327;
+      --gold-500:    #c59b27;
+      --gold-400:    #d4af37;
+      --gold-100:    #fef3c7;
+      --cream-bg:    #faf9f5;
+      --card-bg:     #ffffff;
+      --text-main:   #1e293b;
+      --text-muted:  #64748b;
+      --border-soft: #e2e8f0;
+      --danger:      #dc2626;
+      --shadow-sm:   0 2px 8px rgba(4, 57, 39, 0.06);
+      --shadow-md:   0 8px 24px rgba(4, 57, 39, 0.09);
+      --radius-lg:   14px;
+      --radius-md:   10px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    body {
+      background-color: var(--cream-bg);
+      color: var(--text-main);
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      background: linear-gradient(180deg, var(--emerald-900) 0%, var(--emerald-800) 100%);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      border-left: 3px solid var(--gold-400);
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 100;
+      transition: transform 0.3s ease;
+    }
+
+    .brand-box {
+      padding: 24px 20px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+      text-align: center;
+    }
+
+    .brand-emblem {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      border: 2px solid var(--gold-400);
+      background: rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-title {
+      font-family: 'Amiri', serif;
+      font-size: 1.35rem;
+      color: var(--gold-400);
+      letter-spacing: 0.3px;
+      margin-bottom: 4px;
+    }
+
+    .brand-subtitle {
+      font-size: 0.84rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+    }
+
+    .nav-menu {
+      list-style: none;
+      padding: 16px 12px;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .nav-item {
+      margin-bottom: 6px;
+    }
+
+    .nav-btn {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: #cbd5e1;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.96rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: right;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    .nav-btn.active {
+      background: linear-gradient(90deg, rgba(212, 175, 55, 0.22), rgba(212, 175, 55, 0.08));
+      color: var(--gold-400);
+      border-right: 4px solid var(--gold-400);
+      font-weight: 700;
+    }
+
+    .nav-btn svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-footer {
+      padding: 14px 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 0.8rem;
+      color: #94a3b8;
+      text-align: center;
+    }
+
+    /* Main Content */
+    .main-wrapper {
+      flex: 1;
+      margin-right: 280px;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .topbar {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-soft);
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mobile-toggle {
+      display: none;
+      background: var(--emerald-800);
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .page-heading h1 {
+      font-size: 1.3rem;
+      color: var(--emerald-900);
+      font-weight: 800;
+    }
+
+    .page-heading p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .topbar-badge {
+      background: var(--emerald-50);
+      border: 1px solid var(--gold-400);
+      color: var(--emerald-900);
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot-live {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--emerald-600);
+    }
+
+    .content-area {
+      padding: 26px 28px;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .section-view {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .section-view.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Cards & Grids */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-soft);
+      border-top: 4px solid var(--emerald-800);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .stat-card.gold {
+      border-top-color: var(--gold-500);
+    }
+
+    .stat-label {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--emerald-900);
+    }
+
+    .stat-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: var(--emerald-50);
+      color: var(--emerald-800);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-soft);
+      margin-bottom: 22px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-soft);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--emerald-900);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 20px;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 9px 18px;
+      border-radius: 9px;
+      border: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--emerald-800);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--emerald-900);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
+      color: #fff;
+    }
+
+    .btn-gold:hover {
+      filter: brightness(1.06);
+    }
+
+    .btn-outline {
+      background: #fff;
+      border: 1px solid var(--emerald-800);
+      color: var(--emerald-800);
+    }
+
+    .btn-outline:hover {
+      background: var(--emerald-50);
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 0.82rem;
+    }
+
+    .btn-danger {
+      background: #fee2e2;
+      color: var(--danger);
+    }
+
+    /* Forms */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--emerald-900);
+    }
+
+    input, select, textarea {
+      padding: 10px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      background: #fff;
+      color: var(--text-main);
+      transition: border-color 0.2s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--emerald-700);
+      box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.1);
+    }
+
+    /* Tables */
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+
+    th {
+      background: var(--emerald-50);
+      color: var(--emerald-900);
+      font-weight: 700;
+      text-align: right;
+      padding: 12px 14px;
+      border-bottom: 2px solid var(--gold-400);
+    }
+
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-soft);
+      vertical-align: middle;
+    }
+
+    tr:hover td {
+      background: #fcfbf7;
+    }
+
+    /* Temperament Badges */
+    .badge {
+      padding: 4px 11px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: inline-block;
+    }
+
+    .badge-sanguine   { background: #fee2e2; color: #991b1b; } /* دموي */
+    .badge-choleric   { background: #fef3c7; color: #92400e; } /* صفراوي */
+    .badge-phlegmatic { background: #e0f2fe; color: #075985; } /* بلغمي */
+    .badge-melancholic{ background: #f3e8ff; color: #6b21a8; } /* سوداوي */
+
+    .status-pill {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .status-waiting { background: #fef3c7; color: #92400e; }
+    .status-active  { background: #d1fae5; color: #065f46; }
+    .status-done    { background: #f1f5f9; color: #475569; }
+
+    /* Progress Bars for Temperaments */
+    .temp-bar-item {
+      margin-bottom: 14px;
+    }
+    .temp-bar-head {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    .temp-bar-track {
+      height: 10px;
+      background: #f1f5f9;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .temp-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+    }
+
+    /* Queue Banner */
+    .queue-banner {
+      background: linear-gradient(135deg, var(--emerald-900), var(--emerald-800));
+      color: #fff;
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border: 1px solid var(--gold-400);
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .queue-current-num {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--gold-400);
+    }
+
+    /* A4 Prescription Sheet */
+    .rx-sheet {
+      background: #fff;
+      border: 2px solid var(--emerald-800);
+      border-radius: 8px;
+      padding: 28px 32px;
+      position: relative;
+      box-shadow: var(--shadow-md);
+    }
+
+    .rx-sheet::before {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border: 1px solid var(--gold-400);
+      pointer-events: none;
+      border-radius: 4px;
+    }
+
+    .rx-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--gold-400);
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+    }
+
+    .rx-clinic-name {
+      font-family: 'Amiri', serif;
+      font-size: 1.5rem;
+      color: var(--emerald-900);
+    }
+
+    .rx-doctor-name {
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: var(--gold-600);
+      margin-top: 2px;
+    }
+
+    .rx-meta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      background: var(--emerald-50);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      font-size: 0.9rem;
+    }
+
+    .rx-block {
+      margin-bottom: 16px;
+    }
+
+    .rx-block h4 {
+      color: var(--emerald-900);
+      background: #f8fafc;
+      border-right: 4px solid var(--gold-500);
+      padding: 6px 12px;
+      margin-bottom: 8px;
+      font-size: 0.96rem;
+    }
+
+    .rx-block p {
+      font-size: 0.92rem;
+      line-height: 1.75;
+      white-space: pre-line;
+      padding-right: 10px;
+    }
+
+    .rx-footer {
+      margin-top: 26px;
+      padding-top: 12px;
+      border-top: 1px dashed #cbd5e1;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Reference Cards */
+    .ref-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .ref-card {
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      background: #fff;
+      border-top: 4px solid var(--gold-500);
+    }
+
+    .ref-card h3 {
+      color: var(--emerald-900);
+      margin-bottom: 10px;
+      font-size: 1.08rem;
+    }
+
+    .ref-card ul {
+      padding-right: 18px;
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: var(--text-main);
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 57, 39, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      padding: 16px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      max-width: 720px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 24px;
+      border-top: 5px solid var(--gold-400);
+    }
+
+    /* Print Styling */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #printable-area, #printable-area * {
+        visibility: visible;
+      }
+      #printable-area {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        background: #fff;
+        padding: 15mm;
+        box-shadow: none !important;
+      }
+    }
+
+    @media (max-width: 960px) {
+      .sidebar {
+        transform: translateX(100%);
+      }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      .main-wrapper {
+        margin-right: 0;
+      }
+      .mobile-toggle {
+        display: inline-flex;
+      }
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand-box">
+      <div class="brand-emblem">
+        <!-- Geometric Botanical / Medical Emblem (No human/crescent/star symbols) -->
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+      </div>
+      <div class="brand-title" id="sidebarClinicName">عيادة طبية افتراضية خاصة</div>
+      <div class="brand-subtitle" id="sidebarDoctorName">الدكتورة ليلى سكاك، معالجة بمنهج الطب الشمولي</div>
+    </div>
+
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <button class="nav-btn active" onclick="switchTab('dashboard', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          لوحة التحكم والإحصائيات
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-btn" onclick="switchTab('patients', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          الملفات الطبية والأمزجة
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-btn" onclick="switchTab('prescription', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          الوصفة والبروتوكول العلاجي
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-btn" onclick="switchTab('appointments', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          المواعيد ونظام الانتظار
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-btn" onclick="switchTab('finance', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          المحاسبة ووصولات الدفع
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-btn" onclick="switchTab('reference', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          الدليل السريري للأمزجة
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-btn" onclick="switchTab('settings', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          الإعدادات والنسخ الاحتياطي
+        </button>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      نظام إدارة العيادة الشمولية • حفظ محلي آمن
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="main-wrapper">
+    <header class="topbar">
+      <div class="topbar-right">
+        <button class="mobile-toggle" onclick="toggleSidebar()">☰ القائمة</button>
+        <div class="page-heading">
+          <h1 id="topbarTitle">لوحة التحكم والإحصائيات</h1>
+          <p id="topbarSubtitle">عيادة طبية افتراضية خاصة — الدكتورة ليلى سكاك، معالجة بمنهج الطب الشمولي</p>
+        </div>
+      </div>
+      <div class="topbar-badge">
+        <span class="dot-live"></span>
+        <span id="todayDateLabel"></span>
+      </div>
+    </header>
+
+    <main class="content-area">
+
+      <!-- 1. DASHBOARD -->
+      <section id="view-dashboard" class="section-view active">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div>
+              <div class="stat-label">إجمالي الملفات الشمولية</div>
+              <div class="stat-value" id="statTotalPatients">0</div>
+            </div>
+   
