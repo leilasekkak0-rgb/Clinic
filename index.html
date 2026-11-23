@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>عيادة طبية افتراضية خاصة | نظام إدارة الطب الشمولي</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,295 +38,161 @@
       font-family: 'Tajawal', sans-serif;
     }
 
-    body {
+    html, body {
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
       background-color: var(--cream-bg);
       color: var(--text-main);
-      display: flex;
-      min-height: 100vh;
-      overflow-x: hidden;
     }
 
-    /* Overlay for Mobile Sidebar */
-    .sidebar-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(4, 57, 39, 0.55);
-      z-index: 998;
-      backdrop-filter: blur(2px);
-    }
-
-    .sidebar-overlay.open {
-      display: block;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      width: 290px;
-      background: linear-gradient(180deg, var(--emerald-900) 0%, var(--emerald-800) 100%);
+    /* Top Header Bar */
+    .clinic-header {
+      background: linear-gradient(135deg, var(--emerald-900) 0%, var(--emerald-800) 100%);
       color: #fff;
-      display: flex;
-      flex-direction: column;
-      border-left: 3px solid var(--gold-400);
-      position: fixed;
+      padding: 14px 18px;
+      border-bottom: 3px solid var(--gold-400);
+      position: sticky;
       top: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 999;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: -4px 0 20px rgba(0,0,0,0.18);
+      z-index: 100;
+      box-shadow: var(--shadow-md);
     }
 
-    .sidebar-close-btn {
-      display: none;
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid var(--gold-400);
-      color: var(--gold-400);
-      width: 34px;
-      height: 34px;
-      border-radius: 8px;
-      font-size: 1.2rem;
-      font-weight: 800;
-      cursor: pointer;
+    .header-top-row {
+      display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      max-width: 1360px;
+      margin: 0 auto;
     }
 
-    .brand-box {
-      padding: 22px 18px 16px;
-      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
-      text-align: center;
-      position: relative;
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     .brand-emblem {
-      width: 52px;
-      height: 52px;
-      margin: 0 auto 10px;
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
       border: 2px solid var(--gold-400);
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.08);
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
     }
 
     .brand-title {
       font-family: 'Amiri', serif;
-      font-size: 1.32rem;
+      font-size: 1.35rem;
       color: var(--gold-400);
-      margin-bottom: 8px;
+      line-height: 1.2;
     }
 
-    /* Practitioner Selector Dropdown */
-    .practitioner-box {
-      background: rgba(0, 0, 0, 0.22);
-      border: 1px solid rgba(212, 175, 55, 0.45);
+    .brand-sub {
+      font-size: 0.78rem;
+      color: #d1fae5;
+      margin-top: 2px;
+    }
+
+    /* Practitioner Dropdown in Header */
+    .practitioner-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      padding: 6px 10px;
       border-radius: 10px;
-      padding: 8px 10px;
-      margin-top: 6px;
-      text-align: right;
+      flex: 1;
+      max-width: 440px;
+      min-width: 260px;
     }
 
-    .practitioner-label {
-      font-size: 0.74rem;
+    .practitioner-bar label {
+      font-size: 0.78rem;
       color: var(--gold-400);
-      display: block;
-      margin-bottom: 4px;
       font-weight: 700;
+      white-space: nowrap;
     }
 
-    .practitioner-select {
+    .practitioner-bar select {
       width: 100%;
       background: var(--emerald-900);
       color: #fff;
       border: 1px solid var(--gold-400);
       border-radius: 7px;
-      padding: 7px 8px;
-      font-size: 0.82rem;
+      padding: 6px 8px;
+      font-size: 0.84rem;
       font-weight: 700;
       cursor: pointer;
     }
 
-    .nav-menu {
-      list-style: none;
-      padding: 12px 10px;
-      flex: 1;
-      overflow-y: auto;
-    }
-
-    .nav-item {
-      margin-bottom: 4px;
-    }
-
-    .nav-btn {
-      width: 100%;
-      background: transparent;
-      border: none;
-      color: #e2e8f0;
-      padding: 11px 14px;
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      font-size: 0.92rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-align: right;
-    }
-
-    .nav-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-    }
-
-    .nav-btn.active {
-      background: linear-gradient(90deg, rgba(212, 175, 55, 0.28), rgba(212, 175, 55, 0.1));
-      color: var(--gold-400);
-      border-right: 4px solid var(--gold-400);
-      font-weight: 700;
-    }
-
-    .nav-btn svg {
-      width: 19px;
-      height: 19px;
-      flex-shrink: 0;
-    }
-
-    .sidebar-footer {
-      padding: 12px 16px;
-      border-top: 1px solid rgba(255, 255, 255, 0.12);
-      font-size: 0.78rem;
-      color: #cbd5e1;
-      text-align: center;
-    }
-
-    /* Main Content */
-    .main-wrapper {
-      flex: 1;
-      margin-right: 290px;
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-    }
-
-    .topbar {
+    /* Full Interactive Navigation Bar (No Hidden Drawer!) */
+    .nav-bar-wrapper {
       background: #ffffff;
-      border-bottom: 2px solid var(--gold-400);
-      padding: 14px 22px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      position: sticky;
-      top: 0;
-      z-index: 50;
+      border-bottom: 1px solid var(--border-soft);
+      padding: 10px 14px;
       box-shadow: var(--shadow-sm);
     }
 
-    .topbar-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    .nav-grid-bar {
+      max-width: 1360px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+      gap: 8px;
     }
 
-    .mobile-toggle {
-      display: none;
-      background: var(--emerald-800);
-      color: #fff;
-      border: 1px solid var(--gold-400);
-      padding: 9px 14px;
+    .nav-tab-btn {
+      background: var(--cream-bg);
+      border: 1px solid var(--border-soft);
+      color: var(--emerald-900);
+      padding: 9px 10px;
       border-radius: 9px;
-      font-size: 0.92rem;
+      font-size: 0.84rem;
       font-weight: 700;
       cursor: pointer;
+      display: flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .nav-tab-btn:hover {
+      background: var(--emerald-50);
+      border-color: var(--emerald-700);
+    }
+
+    .nav-tab-btn.active {
+      background: var(--emerald-900);
+      color: var(--gold-400);
+      border-color: var(--gold-400);
+      box-shadow: 0 2px 6px rgba(4, 57, 39, 0.2);
+    }
+
+    .nav-tab-btn svg {
+      width: 16px;
+      height: 16px;
       flex-shrink: 0;
     }
 
-    .page-heading h1 {
-      font-size: 1.2rem;
-      color: var(--emerald-900);
-      font-weight: 800;
-    }
-
-    .page-heading p {
-      font-size: 0.82rem;
-      color: var(--gold-600);
-      font-weight: 700;
-    }
-
-    .topbar-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .topbar-badge {
-      background: var(--emerald-50);
-      border: 1px solid var(--gold-400);
-      color: var(--emerald-900);
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .dot-live {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--emerald-600);
-    }
-
-    /* Quick Mobile Ribbon Bar */
-    .quick-ribbon {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding: 10px 16px;
-      background: var(--emerald-900);
-      border-bottom: 1px solid var(--gold-400);
-    }
-
-    .ribbon-btn {
-      background: rgba(255, 255, 255, 0.08);
-      color: #fff;
-      border: 1px solid rgba(212, 175, 55, 0.35);
-      padding: 7px 14px;
-      border-radius: 999px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      white-space: nowrap;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .ribbon-btn.active, .ribbon-btn:hover {
-      background: var(--gold-500);
-      color: #fff;
-      border-color: var(--gold-400);
-    }
-
-    .content-area {
-      padding: 20px;
-      max-width: 1400px;
-      width: 100%;
+    /* Main Container */
+    .container {
+      max-width: 1360px;
       margin: 0 auto;
+      padding: 18px 14px 40px;
     }
 
     .section-view {
       display: none;
-      animation: fadeIn 0.22s ease;
+      animation: fadeIn 0.2s ease;
     }
 
     .section-view.active {
@@ -334,66 +200,22 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(5px); }
+      from { opacity: 0; transform: translateY(4px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Golden Clinic Style Module Launcher Grid */
-    .modules-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 12px;
-      margin-bottom: 22px;
-    }
-
-    .module-tile {
-      background: #fff;
-      border: 1px solid var(--border-soft);
-      border-bottom: 3px solid var(--gold-400);
-      border-radius: var(--radius-md);
-      padding: 14px 12px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .module-tile:hover {
-      transform: translateY(-2px);
-      border-color: var(--emerald-700);
-      background: var(--emerald-50);
-    }
-
-    .module-tile-icon {
-      width: 38px;
-      height: 38px;
-      margin: 0 auto 8px;
-      border-radius: 10px;
-      background: var(--emerald-900);
-      color: var(--gold-400);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .module-tile-title {
-      font-size: 0.88rem;
-      font-weight: 800;
-      color: var(--emerald-900);
-    }
-
-    /* Stats Cards */
+    /* Stats Grid */
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 14px;
-      margin-bottom: 22px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
     }
 
     .stat-card {
       background: var(--card-bg);
       border-radius: var(--radius-lg);
-      padding: 18px;
+      padding: 16px;
       box-shadow: var(--shadow-sm);
       border: 1px solid var(--border-soft);
       border-top: 4px solid var(--emerald-800);
@@ -402,47 +224,36 @@
       align-items: center;
     }
 
-    .stat-card.gold {
-      border-top-color: var(--gold-500);
-    }
-
-    .stat-label {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-    }
-
-    .stat-value {
-      font-size: 1.55rem;
-      font-weight: 800;
-      color: var(--emerald-900);
-    }
+    .stat-card.gold { border-top-color: var(--gold-500); }
+    .stat-label { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 4px; }
+    .stat-value { font-size: 1.45rem; font-weight: 800; color: var(--emerald-900); }
 
     .stat-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
       background: var(--emerald-50);
       color: var(--emerald-800);
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
     }
 
     .card {
       background: var(--card-bg);
       border-radius: var(--radius-lg);
-      padding: 20px;
+      padding: 18px;
       box-shadow: var(--shadow-sm);
       border: 1px solid var(--border-soft);
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .card-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       padding-bottom: 10px;
       border-bottom: 1px solid var(--border-soft);
       flex-wrap: wrap;
@@ -450,48 +261,47 @@
     }
 
     .card-title {
-      font-size: 1.05rem;
+      font-size: 1.04rem;
       font-weight: 800;
       color: var(--emerald-900);
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
 
     .grid-2 {
       display: grid;
       grid-template-columns: 1.3fr 1fr;
-      gap: 18px;
+      gap: 16px;
+    }
+
+    @media (max-width: 860px) {
+      .grid-2 { grid-template-columns: 1fr; }
     }
 
     /* Buttons */
     .btn {
-      padding: 9px 16px;
+      padding: 9px 15px;
       border-radius: 9px;
       border: none;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
-      transition: all 0.2s ease;
     }
 
     .btn-primary { background: var(--emerald-800); color: #fff; }
-    .btn-primary:hover { background: var(--emerald-900); }
     .btn-gold { background: linear-gradient(135deg, var(--gold-500), var(--gold-600)); color: #fff; }
     .btn-outline { background: #fff; border: 1px solid var(--emerald-800); color: var(--emerald-800); }
-    .btn-sm { padding: 6px 11px; font-size: 0.8rem; }
+    .btn-sm { padding: 5px 10px; font-size: 0.78rem; }
     .btn-danger { background: #fee2e2; color: var(--danger); }
 
     /* Forms */
     .form-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
       gap: 12px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .form-group {
@@ -501,7 +311,7 @@
     }
 
     .form-group label {
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       font-weight: 700;
       color: var(--emerald-900);
     }
@@ -510,47 +320,34 @@
       padding: 9px 11px;
       border: 1px solid #cbd5e1;
       border-radius: 8px;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       background: #fff;
       color: var(--text-main);
-    }
-
-    input:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: var(--emerald-700);
-      box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.1);
+      width: 100%;
     }
 
     /* Tables */
     .table-wrap { overflow-x: auto; }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.88rem;
-    }
-
+    table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
     th {
       background: var(--emerald-50);
       color: var(--emerald-900);
       font-weight: 700;
       text-align: right;
-      padding: 11px 12px;
+      padding: 10px 12px;
       border-bottom: 2px solid var(--gold-400);
       white-space: nowrap;
     }
-
     td {
-      padding: 11px 12px;
+      padding: 10px 12px;
       border-bottom: 1px solid var(--border-soft);
       vertical-align: middle;
     }
 
-    /* Badges */
     .badge {
-      padding: 4px 10px;
+      padding: 3px 9px;
       border-radius: 999px;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 700;
       display: inline-block;
     }
@@ -560,9 +357,9 @@
     .badge-melancholic{ background: #f3e8ff; color: #6b21a8; }
 
     .status-pill {
-      padding: 4px 9px;
+      padding: 3px 8px;
       border-radius: 6px;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 700;
       white-space: nowrap;
     }
@@ -571,20 +368,9 @@
     .status-done    { background: #f1f5f9; color: #475569; }
 
     /* Progress Bars */
-    .temp-bar-item { margin-bottom: 12px; }
-    .temp-bar-head {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.85rem;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .temp-bar-track {
-      height: 9px;
-      background: #f1f5f9;
-      border-radius: 999px;
-      overflow: hidden;
-    }
+    .temp-bar-item { margin-bottom: 11px; }
+    .temp-bar-head { display: flex; justify-content: space-between; font-size: 0.84rem; font-weight: 700; margin-bottom: 4px; }
+    .temp-bar-track { height: 8px; background: #f1f5f9; border-radius: 999px; overflow: hidden; }
     .temp-bar-fill { height: 100%; border-radius: 999px; }
 
     /* Queue Banner */
@@ -592,130 +378,84 @@
       background: linear-gradient(135deg, var(--emerald-900), var(--emerald-800));
       color: #fff;
       border-radius: var(--radius-lg);
-      padding: 18px 20px;
+      padding: 16px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
       border: 1px solid var(--gold-400);
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 10px;
     }
-
-    .queue-current-num {
-      font-size: 2rem;
-      font-weight: 800;
-      color: var(--gold-400);
-    }
+    .queue-current-num { font-size: 1.8rem; font-weight: 800; color: var(--gold-400); }
 
     /* A4 Prescription Sheet */
     .rx-sheet {
       background: #fff;
       border: 2px solid var(--emerald-800);
       border-radius: 8px;
-      padding: 24px 26px;
+      padding: 20px;
       position: relative;
       box-shadow: var(--shadow-md);
     }
-
-    .rx-sheet::before {
-      content: "";
-      position: absolute;
-      inset: 5px;
-      border: 1px solid var(--gold-400);
-      pointer-events: none;
-      border-radius: 4px;
-    }
-
     .rx-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       border-bottom: 2px solid var(--gold-400);
-      padding-bottom: 12px;
-      margin-bottom: 14px;
-      gap: 10px;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+      gap: 8px;
     }
-
-    .rx-clinic-name {
-      font-family: 'Amiri', serif;
-      font-size: 1.4rem;
-      color: var(--emerald-900);
-    }
-
-    .rx-doctor-name {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--gold-600);
-      margin-top: 2px;
-    }
-
+    .rx-clinic-name { font-family: 'Amiri', serif; font-size: 1.35rem; color: var(--emerald-900); }
+    .rx-doctor-name { font-size: 0.88rem; font-weight: 700; color: var(--gold-600); margin-top: 2px; }
     .rx-meta {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
+      gap: 6px;
       background: var(--emerald-50);
-      padding: 10px 14px;
+      padding: 9px 12px;
       border-radius: 8px;
-      margin-bottom: 14px;
-      font-size: 0.86rem;
+      margin-bottom: 12px;
+      font-size: 0.84rem;
     }
-
-    .rx-block { margin-bottom: 14px; }
+    .rx-block { margin-bottom: 12px; }
     .rx-block h4 {
       color: var(--emerald-900);
       background: #f8fafc;
       border-right: 4px solid var(--gold-500);
       padding: 5px 10px;
-      margin-bottom: 6px;
-      font-size: 0.92rem;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
     }
-
-    .rx-block p {
-      font-size: 0.88rem;
-      line-height: 1.7;
-      white-space: pre-line;
-      padding-right: 8px;
-    }
-
+    .rx-block p { font-size: 0.86rem; line-height: 1.65; white-space: pre-line; padding-right: 6px; }
     .rx-footer {
-      margin-top: 22px;
+      margin-top: 18px;
       padding-top: 10px;
       border-top: 1px dashed #cbd5e1;
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 8px;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
     }
 
-    /* Reference & Lab Cards */
+    /* Reference Cards */
     .ref-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
     }
-
     .ref-card {
       border: 1px solid var(--border-soft);
       border-radius: var(--radius-lg);
-      padding: 16px;
+      padding: 15px;
       background: #fff;
       border-top: 4px solid var(--gold-500);
     }
-
-    .ref-card h3 {
-      color: var(--emerald-900);
-      margin-bottom: 8px;
-      font-size: 1.02rem;
-    }
-
-    .ref-card ul {
-      padding-right: 16px;
-      font-size: 0.85rem;
-      line-height: 1.65;
-    }
+    .ref-card h3 { color: var(--emerald-900); margin-bottom: 8px; font-size: 1rem; }
+    .ref-card ul { padding-right: 16px; font-size: 0.84rem; line-height: 1.6; }
 
     /* Modal */
     .modal-backdrop {
@@ -726,19 +466,17 @@
       align-items: center;
       justify-content: center;
       z-index: 1100;
-      padding: 16px;
+      padding: 14px;
     }
-
     .modal-backdrop.open { display: flex; }
-
     .modal-box {
       background: #fff;
       border-radius: var(--radius-lg);
-      max-width: 680px;
+      max-width: 640px;
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
-      padding: 22px;
+      padding: 20px;
       border-top: 5px solid var(--gold-400);
     }
 
@@ -754,66 +492,122 @@
         box-shadow: none !important;
       }
     }
-
-    @media (max-width: 960px) {
-      .sidebar {
-        transform: translateX(100%);
-      }
-      .sidebar.open {
-        transform: translateX(0);
-      }
-      .sidebar-close-btn {
-        display: flex;
-      }
-      .main-wrapper {
-        margin-right: 0;
-      }
-      .mobile-toggle {
-        display: inline-flex;
-      }
-      .grid-2 {
-        grid-template-columns: 1fr;
-      }
-      .topbar-badge {
-        display: none;
-      }
-    }
   </style>
 </head>
 <body>
 
-  <!-- Mobile Backdrop Overlay -->
-  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
-
-  <!-- Sidebar -->
-  <aside class="sidebar" id="sidebar">
-    <div class="brand-box">
-      <button class="sidebar-close-btn" onclick="closeSidebar()" title="إغلاق القائمة">✕</button>
-      <div class="brand-emblem">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
-          <circle cx="12" cy="12" r="3"/>
-        </svg>
+  <!-- Top Header -->
+  <header class="clinic-header">
+    <div class="header-top-row">
+      <div class="brand-group">
+        <div class="brand-emblem">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-title" id="headerClinicName">عيادة طبية افتراضية خاصة</div>
+          <div class="brand-sub" id="todayDateLabel">نظام الإدارة المتكامل للطب الشمولي</div>
+        </div>
       </div>
-      <div class="brand-title" id="sidebarClinicName">عيادة طبية افتراضية خاصة</div>
 
-      <!-- Practitioner Dropdown Selector -->
-      <div class="practitioner-box">
-        <label class="practitioner-label" for="practitionerSelect">المعالج / الأخصائي المشرف:</label>
-        <select id="practitionerSelect" class="practitioner-select" onchange="changePractitioner()">
+      <!-- Practitioner Dropdown -->
+      <div class="practitioner-bar">
+        <label for="practitionerSelect">المعالج:</label>
+        <select id="practitionerSelect" onchange="changePractitioner()">
           <option value="الدكتورة ليلى سكاك، معالجة بمنهج الطب الشمولي">الدكتورة ليلى سكاك، معالجة بمنهج الطب الشمولي</option>
           <option value="الدكتور إحسان حمدان، أخصائي طب شمولي">الدكتور إحسان حمدان، أخصائي طب شمولي</option>
         </select>
       </div>
     </div>
+  </header>
 
-    <ul class="nav-menu">
-      <li class="nav-item">
-        <button class="nav-btn active" data-tab="dashboard" onclick="switchTab('dashboard')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-          لوحة التحكم والإحصائيات
-        </button>
-      </li>
-      <li class="nav-item">
-        <button class="nav-btn" data-tab="patients" onclick="switchTab('patients')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColo
+  <!-- Direct Interactive Navigation Grid (Always Visible & Accessible) -->
+  <nav class="nav-bar-wrapper" aria-label="القائمة الرئيسية">
+    <div class="nav-grid-bar">
+      <button type="button" class="nav-tab-btn active" data-tab="dashboard" onclick="switchTab('dashboard')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        الرئيسية
+      </button>
+      <button type="button" class="nav-tab-btn" data-tab="patients" onclick="switchTab('patients')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        الملفات الطبية
+      </button>
+      <button type="button" class="nav-tab-btn" data-tab="prescription" onclick="switchTab('prescription')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        الوصفة العلاجية
+      </button>
+      <button type="button" class="nav-tab-btn" data-tab="appointments" onclick="switchTab('appointments')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg>
+        المواعيد والانتظار
+      </button>
+      <button type="button" class="nav-tab-btn" data-tab="labs" onclick="switchTab('labs')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6"/><path d="M10 3v6l-4 7a2 2 0 0 0 1.7 3h8.6a2 2 0 0 0 1.7-3l-4-7V3"/></svg>
+        المخابر والصيدلية
+      </button>
+      <button type="button" class="nav-tab-btn" data-tab="finance" onclick="switchTab('finance')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        المحاسبة
+      </button>
+      <button type="button" class="nav-tab-btn" data-tab="reference" onclick="switchTab('reference')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        دليل الأمزجة
+      </button>
+      <button type="button" class="nav-tab-btn" data-tab="settings" onclick="switchTab('settings')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        الإعدادات
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Workspace -->
+  <main class="container">
+
+    <!-- 1. DASHBOARD -->
+    <section id="view-dashboard" class="section-view active">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div>
+            <div class="stat-label">إجمالي الملفات الشمولية</div>
+            <div class="stat-value" id="statTotalPatients">0</div>
+          </div>
+          <div class="stat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          </div>
+        </div>
+
+        <div class="stat-card gold">
+          <div>
+            <div class="stat-label">جلسات واستشارات اليوم</div>
+            <div class="stat-value" id="statTodayAppts">0</div>
+          </div>
+          <div class="stat-icon" style="background:#fef3c7;color:#92400e;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div>
+            <div class="stat-label">الوصفات العلاجية الصادرة</div>
+            <div class="stat-value" id="statTotalRx">0</div>
+          </div>
+          <div class="stat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+        </div>
+
+        <div class="stat-card gold">
+          <div>
+            <div class="stat-label">إجمالي الإيرادات المسجلة</div>
+            <div class="stat-value" id="statTotalRevenue">0 د.ج</div>
+          </div>
+          <div class="stat-icon" style="background:#fef3c7;color:#92400e;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head
