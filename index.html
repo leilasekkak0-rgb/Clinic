@@ -26,7 +26,7 @@
       --border-soft: #e2e8f0;
       --danger:      #dc2626;
       --shadow-sm:   0 2px 8px rgba(4, 57, 39, 0.06);
-      --shadow-md:   0 8px 24px rgba(4, 57, 39, 0.09);
+      --shadow-md:   0 8px 24px rgba(4, 57, 39, 0.12);
       --radius-lg:   14px;
       --radius-md:   10px;
     }
@@ -46,9 +46,23 @@
       overflow-x: hidden;
     }
 
+    /* Overlay for Mobile Sidebar */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 57, 39, 0.55);
+      z-index: 998;
+      backdrop-filter: blur(2px);
+    }
+
+    .sidebar-overlay.open {
+      display: block;
+    }
+
     /* Sidebar */
     .sidebar {
-      width: 280px;
+      width: 290px;
       background: linear-gradient(180deg, var(--emerald-900) 0%, var(--emerald-800) 100%);
       color: #fff;
       display: flex;
@@ -58,20 +72,40 @@
       top: 0;
       right: 0;
       bottom: 0;
-      z-index: 100;
-      transition: transform 0.3s ease;
+      z-index: 999;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: -4px 0 20px rgba(0,0,0,0.18);
+    }
+
+    .sidebar-close-btn {
+      display: none;
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid var(--gold-400);
+      color: var(--gold-400);
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      font-weight: 800;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
     }
 
     .brand-box {
-      padding: 24px 20px;
+      padding: 22px 18px 16px;
       border-bottom: 1px solid rgba(212, 175, 55, 0.25);
       text-align: center;
+      position: relative;
     }
 
     .brand-emblem {
-      width: 58px;
-      height: 58px;
-      margin: 0 auto 12px;
+      width: 52px;
+      height: 52px;
+      margin: 0 auto 10px;
       border-radius: 50%;
       border: 2px solid var(--gold-400);
       background: rgba(255, 255, 255, 0.06);
@@ -82,40 +116,63 @@
 
     .brand-title {
       font-family: 'Amiri', serif;
-      font-size: 1.35rem;
+      font-size: 1.32rem;
       color: var(--gold-400);
-      letter-spacing: 0.3px;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
     }
 
-    .brand-subtitle {
-      font-size: 0.84rem;
-      color: #e2e8f0;
-      line-height: 1.5;
+    /* Practitioner Selector Dropdown */
+    .practitioner-box {
+      background: rgba(0, 0, 0, 0.22);
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      border-radius: 10px;
+      padding: 8px 10px;
+      margin-top: 6px;
+      text-align: right;
+    }
+
+    .practitioner-label {
+      font-size: 0.74rem;
+      color: var(--gold-400);
+      display: block;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+
+    .practitioner-select {
+      width: 100%;
+      background: var(--emerald-900);
+      color: #fff;
+      border: 1px solid var(--gold-400);
+      border-radius: 7px;
+      padding: 7px 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
     }
 
     .nav-menu {
       list-style: none;
-      padding: 16px 12px;
+      padding: 12px 10px;
       flex: 1;
       overflow-y: auto;
     }
 
     .nav-item {
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .nav-btn {
       width: 100%;
       background: transparent;
       border: none;
-      color: #cbd5e1;
-      padding: 12px 16px;
+      color: #e2e8f0;
+      padding: 11px 14px;
       border-radius: var(--radius-md);
       display: flex;
       align-items: center;
-      gap: 12px;
-      font-size: 0.96rem;
+      gap: 11px;
+      font-size: 0.92rem;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -123,35 +180,35 @@
     }
 
     .nav-btn:hover {
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.1);
       color: #fff;
     }
 
     .nav-btn.active {
-      background: linear-gradient(90deg, rgba(212, 175, 55, 0.22), rgba(212, 175, 55, 0.08));
+      background: linear-gradient(90deg, rgba(212, 175, 55, 0.28), rgba(212, 175, 55, 0.1));
       color: var(--gold-400);
       border-right: 4px solid var(--gold-400);
       font-weight: 700;
     }
 
     .nav-btn svg {
-      width: 20px;
-      height: 20px;
+      width: 19px;
+      height: 19px;
       flex-shrink: 0;
     }
 
     .sidebar-footer {
-      padding: 14px 18px;
+      padding: 12px 16px;
       border-top: 1px solid rgba(255, 255, 255, 0.12);
-      font-size: 0.8rem;
-      color: #94a3b8;
+      font-size: 0.78rem;
+      color: #cbd5e1;
       text-align: center;
     }
 
     /* Main Content */
     .main-wrapper {
       flex: 1;
-      margin-right: 280px;
+      margin-right: 290px;
       display: flex;
       flex-direction: column;
       min-width: 0;
@@ -159,15 +216,16 @@
 
     .topbar {
       background: #ffffff;
-      border-bottom: 1px solid var(--border-soft);
-      padding: 16px 28px;
+      border-bottom: 2px solid var(--gold-400);
+      padding: 14px 22px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      gap: 12px;
       position: sticky;
       top: 0;
       z-index: 50;
+      box-shadow: var(--shadow-sm);
     }
 
     .topbar-right {
@@ -180,45 +238,87 @@
       display: none;
       background: var(--emerald-800);
       color: #fff;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 8px;
+      border: 1px solid var(--gold-400);
+      padding: 9px 14px;
+      border-radius: 9px;
+      font-size: 0.92rem;
+      font-weight: 700;
       cursor: pointer;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
     }
 
     .page-heading h1 {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       color: var(--emerald-900);
       font-weight: 800;
     }
 
     .page-heading p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
+      font-size: 0.82rem;
+      color: var(--gold-600);
+      font-weight: 700;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .topbar-badge {
       background: var(--emerald-50);
       border: 1px solid var(--gold-400);
       color: var(--emerald-900);
-      padding: 8px 16px;
+      padding: 6px 12px;
       border-radius: 999px;
-      font-size: 0.86rem;
+      font-size: 0.8rem;
       font-weight: 700;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .dot-live {
-      width: 9px;
-      height: 9px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: var(--emerald-600);
     }
 
+    /* Quick Mobile Ribbon Bar */
+    .quick-ribbon {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 10px 16px;
+      background: var(--emerald-900);
+      border-bottom: 1px solid var(--gold-400);
+    }
+
+    .ribbon-btn {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .ribbon-btn.active, .ribbon-btn:hover {
+      background: var(--gold-500);
+      color: #fff;
+      border-color: var(--gold-400);
+    }
+
     .content-area {
-      padding: 26px 28px;
+      padding: 20px;
       max-width: 1400px;
       width: 100%;
       margin: 0 auto;
@@ -226,7 +326,7 @@
 
     .section-view {
       display: none;
-      animation: fadeIn 0.25s ease;
+      animation: fadeIn 0.22s ease;
     }
 
     .section-view.active {
@@ -234,22 +334,66 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
+      from { opacity: 0; transform: translateY(5px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Cards & Grids */
+    /* Golden Clinic Style Module Launcher Grid */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .module-tile {
+      background: #fff;
+      border: 1px solid var(--border-soft);
+      border-bottom: 3px solid var(--gold-400);
+      border-radius: var(--radius-md);
+      padding: 14px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .module-tile:hover {
+      transform: translateY(-2px);
+      border-color: var(--emerald-700);
+      background: var(--emerald-50);
+    }
+
+    .module-tile-icon {
+      width: 38px;
+      height: 38px;
+      margin: 0 auto 8px;
+      border-radius: 10px;
+      background: var(--emerald-900);
+      color: var(--gold-400);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .module-tile-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--emerald-900);
+    }
+
+    /* Stats Cards */
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-      margin-bottom: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 22px;
     }
 
     .stat-card {
       background: var(--card-bg);
       border-radius: var(--radius-lg);
-      padding: 20px;
+      padding: 18px;
       box-shadow: var(--shadow-sm);
       border: 1px solid var(--border-soft);
       border-top: 4px solid var(--emerald-800);
@@ -263,20 +407,20 @@
     }
 
     .stat-label {
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       color: var(--text-muted);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .stat-value {
-      font-size: 1.7rem;
+      font-size: 1.55rem;
       font-weight: 800;
       color: var(--emerald-900);
     }
 
     .stat-icon {
-      width: 46px;
-      height: 46px;
+      width: 44px;
+      height: 44px;
       border-radius: 12px;
       background: var(--emerald-50);
       color: var(--emerald-800);
@@ -288,26 +432,26 @@
     .card {
       background: var(--card-bg);
       border-radius: var(--radius-lg);
-      padding: 22px;
+      padding: 20px;
       box-shadow: var(--shadow-sm);
       border: 1px solid var(--border-soft);
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
     .card-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 18px;
-      padding-bottom: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
       border-bottom: 1px solid var(--border-soft);
       flex-wrap: wrap;
       gap: 10px;
     }
 
     .card-title {
-      font-size: 1.1rem;
-      font-weight: 700;
+      font-size: 1.05rem;
+      font-weight: 800;
       color: var(--emerald-900);
       display: flex;
       align-items: center;
@@ -316,90 +460,59 @@
 
     .grid-2 {
       display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 20px;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 18px;
     }
 
     /* Buttons */
     .btn {
-      padding: 9px 18px;
+      padding: 9px 16px;
       border-radius: 9px;
       border: none;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 7px;
+      justify-content: center;
+      gap: 6px;
       transition: all 0.2s ease;
     }
 
-    .btn-primary {
-      background: var(--emerald-800);
-      color: #fff;
-    }
-
-    .btn-primary:hover {
-      background: var(--emerald-900);
-    }
-
-    .btn-gold {
-      background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
-      color: #fff;
-    }
-
-    .btn-gold:hover {
-      filter: brightness(1.06);
-    }
-
-    .btn-outline {
-      background: #fff;
-      border: 1px solid var(--emerald-800);
-      color: var(--emerald-800);
-    }
-
-    .btn-outline:hover {
-      background: var(--emerald-50);
-    }
-
-    .btn-sm {
-      padding: 6px 12px;
-      font-size: 0.82rem;
-    }
-
-    .btn-danger {
-      background: #fee2e2;
-      color: var(--danger);
-    }
+    .btn-primary { background: var(--emerald-800); color: #fff; }
+    .btn-primary:hover { background: var(--emerald-900); }
+    .btn-gold { background: linear-gradient(135deg, var(--gold-500), var(--gold-600)); color: #fff; }
+    .btn-outline { background: #fff; border: 1px solid var(--emerald-800); color: var(--emerald-800); }
+    .btn-sm { padding: 6px 11px; font-size: 0.8rem; }
+    .btn-danger { background: #fee2e2; color: var(--danger); }
 
     /* Forms */
     .form-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
       margin-bottom: 14px;
     }
 
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
     }
 
     .form-group label {
-      font-size: 0.86rem;
+      font-size: 0.84rem;
       font-weight: 700;
       color: var(--emerald-900);
     }
 
     input, select, textarea {
-      padding: 10px 12px;
+      padding: 9px 11px;
       border: 1px solid #cbd5e1;
       border-radius: 8px;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       background: #fff;
       color: var(--text-main);
-      transition: border-color 0.2s;
     }
 
     input:focus, select:focus, textarea:focus {
@@ -409,14 +522,12 @@
     }
 
     /* Tables */
-    .table-wrap {
-      overflow-x: auto;
-    }
+    .table-wrap { overflow-x: auto; }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.92rem;
+      font-size: 0.88rem;
     }
 
     th {
@@ -424,83 +535,75 @@
       color: var(--emerald-900);
       font-weight: 700;
       text-align: right;
-      padding: 12px 14px;
+      padding: 11px 12px;
       border-bottom: 2px solid var(--gold-400);
+      white-space: nowrap;
     }
 
     td {
-      padding: 12px 14px;
+      padding: 11px 12px;
       border-bottom: 1px solid var(--border-soft);
       vertical-align: middle;
     }
 
-    tr:hover td {
-      background: #fcfbf7;
-    }
-
-    /* Temperament Badges */
+    /* Badges */
     .badge {
-      padding: 4px 11px;
+      padding: 4px 10px;
       border-radius: 999px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
       display: inline-block;
     }
-
-    .badge-sanguine   { background: #fee2e2; color: #991b1b; } /* دموي */
-    .badge-choleric   { background: #fef3c7; color: #92400e; } /* صفراوي */
-    .badge-phlegmatic { background: #e0f2fe; color: #075985; } /* بلغمي */
-    .badge-melancholic{ background: #f3e8ff; color: #6b21a8; } /* سوداوي */
+    .badge-sanguine   { background: #fee2e2; color: #991b1b; }
+    .badge-choleric   { background: #fef3c7; color: #92400e; }
+    .badge-phlegmatic { background: #e0f2fe; color: #075985; }
+    .badge-melancholic{ background: #f3e8ff; color: #6b21a8; }
 
     .status-pill {
-      padding: 4px 10px;
+      padding: 4px 9px;
       border-radius: 6px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
+      white-space: nowrap;
     }
     .status-waiting { background: #fef3c7; color: #92400e; }
     .status-active  { background: #d1fae5; color: #065f46; }
     .status-done    { background: #f1f5f9; color: #475569; }
 
-    /* Progress Bars for Temperaments */
-    .temp-bar-item {
-      margin-bottom: 14px;
-    }
+    /* Progress Bars */
+    .temp-bar-item { margin-bottom: 12px; }
     .temp-bar-head {
       display: flex;
       justify-content: space-between;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       font-weight: 700;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
     }
     .temp-bar-track {
-      height: 10px;
+      height: 9px;
       background: #f1f5f9;
       border-radius: 999px;
       overflow: hidden;
     }
-    .temp-bar-fill {
-      height: 100%;
-      border-radius: 999px;
-    }
+    .temp-bar-fill { height: 100%; border-radius: 999px; }
 
     /* Queue Banner */
     .queue-banner {
       background: linear-gradient(135deg, var(--emerald-900), var(--emerald-800));
       color: #fff;
       border-radius: var(--radius-lg);
-      padding: 20px 24px;
+      padding: 18px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       border: 1px solid var(--gold-400);
       flex-wrap: wrap;
-      gap: 14px;
+      gap: 12px;
     }
 
     .queue-current-num {
-      font-size: 2.2rem;
+      font-size: 2rem;
       font-weight: 800;
       color: var(--gold-400);
     }
@@ -510,7 +613,7 @@
       background: #fff;
       border: 2px solid var(--emerald-800);
       border-radius: 8px;
-      padding: 28px 32px;
+      padding: 24px 26px;
       position: relative;
       box-shadow: var(--shadow-md);
     }
@@ -518,7 +621,7 @@
     .rx-sheet::before {
       content: "";
       position: absolute;
-      inset: 6px;
+      inset: 5px;
       border: 1px solid var(--gold-400);
       pointer-events: none;
       border-radius: 4px;
@@ -527,20 +630,21 @@
     .rx-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       border-bottom: 2px solid var(--gold-400);
-      padding-bottom: 14px;
-      margin-bottom: 18px;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      gap: 10px;
     }
 
     .rx-clinic-name {
       font-family: 'Amiri', serif;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       color: var(--emerald-900);
     }
 
     .rx-doctor-name {
-      font-size: 0.96rem;
+      font-size: 0.9rem;
       font-weight: 700;
       color: var(--gold-600);
       margin-top: 2px;
@@ -549,70 +653,68 @@
     .rx-meta {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      gap: 8px;
       background: var(--emerald-50);
-      padding: 12px 16px;
+      padding: 10px 14px;
       border-radius: 8px;
-      margin-bottom: 18px;
-      font-size: 0.9rem;
+      margin-bottom: 14px;
+      font-size: 0.86rem;
     }
 
-    .rx-block {
-      margin-bottom: 16px;
-    }
-
+    .rx-block { margin-bottom: 14px; }
     .rx-block h4 {
       color: var(--emerald-900);
       background: #f8fafc;
       border-right: 4px solid var(--gold-500);
-      padding: 6px 12px;
-      margin-bottom: 8px;
-      font-size: 0.96rem;
+      padding: 5px 10px;
+      margin-bottom: 6px;
+      font-size: 0.92rem;
     }
 
     .rx-block p {
-      font-size: 0.92rem;
-      line-height: 1.75;
+      font-size: 0.88rem;
+      line-height: 1.7;
       white-space: pre-line;
-      padding-right: 10px;
+      padding-right: 8px;
     }
 
     .rx-footer {
-      margin-top: 26px;
-      padding-top: 12px;
+      margin-top: 22px;
+      padding-top: 10px;
       border-top: 1px dashed #cbd5e1;
       display: flex;
       justify-content: space-between;
-      font-size: 0.85rem;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.82rem;
       color: var(--text-muted);
     }
 
-    /* Reference Cards */
+    /* Reference & Lab Cards */
     .ref-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
     }
 
     .ref-card {
       border: 1px solid var(--border-soft);
       border-radius: var(--radius-lg);
-      padding: 18px;
+      padding: 16px;
       background: #fff;
       border-top: 4px solid var(--gold-500);
     }
 
     .ref-card h3 {
       color: var(--emerald-900);
-      margin-bottom: 10px;
-      font-size: 1.08rem;
+      margin-bottom: 8px;
+      font-size: 1.02rem;
     }
 
     .ref-card ul {
-      padding-right: 18px;
-      font-size: 0.88rem;
-      line-height: 1.7;
-      color: var(--text-main);
+      padding-right: 16px;
+      font-size: 0.85rem;
+      line-height: 1.65;
     }
 
     /* Modal */
@@ -623,39 +725,32 @@
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 200;
+      z-index: 1100;
       padding: 16px;
     }
 
-    .modal-backdrop.open {
-      display: flex;
-    }
+    .modal-backdrop.open { display: flex; }
 
     .modal-box {
       background: #fff;
       border-radius: var(--radius-lg);
-      max-width: 720px;
+      max-width: 680px;
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
-      padding: 24px;
+      padding: 22px;
       border-top: 5px solid var(--gold-400);
     }
 
-    /* Print Styling */
     @media print {
-      body * {
-        visibility: hidden;
-      }
-      #printable-area, #printable-area * {
-        visibility: visible;
-      }
+      body * { visibility: hidden; }
+      #printable-area, #printable-area * { visibility: visible; }
       #printable-area {
         position: fixed;
         inset: 0;
         width: 100%;
         background: #fff;
-        padding: 15mm;
+        padding: 14mm;
         box-shadow: none !important;
       }
     }
@@ -667,6 +762,9 @@
       .sidebar.open {
         transform: translateX(0);
       }
+      .sidebar-close-btn {
+        display: flex;
+      }
       .main-wrapper {
         margin-right: 0;
       }
@@ -676,99 +774,46 @@
       .grid-2 {
         grid-template-columns: 1fr;
       }
+      .topbar-badge {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- Mobile Backdrop Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
   <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="brand-box">
+      <button class="sidebar-close-btn" onclick="closeSidebar()" title="إغلاق القائمة">✕</button>
       <div class="brand-emblem">
-        <!-- Geometric Botanical / Medical Emblem (No human/crescent/star symbols) -->
-        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
           <circle cx="12" cy="12" r="3"/>
         </svg>
       </div>
       <div class="brand-title" id="sidebarClinicName">عيادة طبية افتراضية خاصة</div>
-      <div class="brand-subtitle" id="sidebarDoctorName">الدكتورة ليلى سكاك، معالجة بمنهج الطب الشمولي</div>
+
+      <!-- Practitioner Dropdown Selector -->
+      <div class="practitioner-box">
+        <label class="practitioner-label" for="practitionerSelect">المعالج / الأخصائي المشرف:</label>
+        <select id="practitionerSelect" class="practitioner-select" onchange="changePractitioner()">
+          <option value="الدكتورة ليلى سكاك، معالجة بمنهج الطب الشمولي">الدكتورة ليلى سكاك، معالجة بمنهج الطب الشمولي</option>
+          <option value="الدكتور إحسان حمدان، أخصائي طب شمولي">الدكتور إحسان حمدان، أخصائي طب شمولي</option>
+        </select>
+      </div>
     </div>
 
     <ul class="nav-menu">
       <li class="nav-item">
-        <button class="nav-btn active" onclick="switchTab('dashboard', this)">
+        <button class="nav-btn active" data-tab="dashboard" onclick="switchTab('dashboard')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
           لوحة التحكم والإحصائيات
         </button>
       </li>
       <li class="nav-item">
-        <button class="nav-btn" onclick="switchTab('patients', this)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-          الملفات الطبية والأمزجة
-        </button>
-      </li>
-      <li class="nav-item">
-        <button class="nav-btn" onclick="switchTab('prescription', this)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-          الوصفة والبروتوكول العلاجي
-        </button>
-      </li>
-      <li class="nav-item">
-        <button class="nav-btn" onclick="switchTab('appointments', this)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          المواعيد ونظام الانتظار
-        </button>
-      </li>
-      <li class="nav-item">
-        <button class="nav-btn" onclick="switchTab('finance', this)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          المحاسبة ووصولات الدفع
-        </button>
-      </li>
-      <li class="nav-item">
-        <button class="nav-btn" onclick="switchTab('reference', this)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-          الدليل السريري للأمزجة
-        </button>
-      </li>
-      <li class="nav-item">
-        <button class="nav-btn" onclick="switchTab('settings', this)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-          الإعدادات والنسخ الاحتياطي
-        </button>
-      </li>
-    </ul>
-
-    <div class="sidebar-footer">
-      نظام إدارة العيادة الشمولية • حفظ محلي آمن
-    </div>
-  </aside>
-
-  <!-- Main Content -->
-  <div class="main-wrapper">
-    <header class="topbar">
-      <div class="topbar-right">
-        <button class="mobile-toggle" onclick="toggleSidebar()">☰ القائمة</button>
-        <div class="page-heading">
-          <h1 id="topbarTitle">لوحة التحكم والإحصائيات</h1>
-          <p id="topbarSubtitle">عيادة طبية افتراضية خاصة — الدكتورة ليلى سكاك، معالجة بمنهج الطب الشمولي</p>
-        </div>
-      </div>
-      <div class="topbar-badge">
-        <span class="dot-live"></span>
-        <span id="todayDateLabel"></span>
-      </div>
-    </header>
-
-    <main class="content-area">
-
-      <!-- 1. DASHBOARD -->
-      <section id="view-dashboard" class="section-view active">
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div>
-              <div class="stat-label">إجمالي الملفات الشمولية</div>
-              <div class="stat-value" id="statTotalPatients">0</div>
-            </div>
-   
+        <button class="nav-btn" data-tab="patients" onclick="switchTab('patients')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColo
